@@ -1,17 +1,87 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %}Welcome!{% endblock %}</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{# Feuilles de style #}
+		{% block stylesheets %}
+		{% endblock %}
+
+		{# Scripts JS #}
+		{% block javascripts %}
+			{% block importmap %}{{ importmap('app') }}{% endblock %}
+		{% endblock %}
+	</head>
+	<body>
+		<header class="nav">
+			<div class="container nav-inner">
+				<a class="brand" href="index.html">
+					<span class="brand-logo">A</span>
+					<span>Cinéma Aurora</span>
+				</a>
+
+				<input id="menu" type="checkbox" class="hidden" aria-hidden="true">
+				<label for="menu" class="menu-toggle btn">Menu</label>
+
+				<nav class="nav-links">
+					<a href="index.html" class="active">Accueil</a>
+					<a href="programmation.html">Programmation</a>
+					<a href="reservation.html">Réserver</a>
+					<a href="profil.html">Profil</a>
+					<a class="cta" href="auth.html">Se connecter</a>
+				</nav>
+			</div>
+		</header>
+
+		<main>
+			{% block body %}{% endblock %}
+		</main>
+
+		<footer class="footer">
+			<div class="container">
+				© Cinéma Aurora — Mentions légales · CGV · Données personnelles
+			</div>
+		</footer>
+
+		<!-- Code injected by live-server -->
+		<script>
+			// <![CDATA[  <-- For SVG support
+			if ('WebSocket' in window) {
+				(function () {
+					function refreshCSS() {
+						var sheets = [].slice.call(document.getElementsByTagName("link"));
+						var head = document.getElementsByTagName("head")[0];
+						for (var i = 0; i < sheets.length; ++i) {
+							var elem = sheets[i];
+							var parent = elem.parentElement || head;
+							parent.removeChild(elem);
+							var rel = elem.rel;
+							if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+								var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+								elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+							}
+							parent.appendChild(elem);
+						}
+					}
+					var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+					var address = protocol + window.location.host + window.location.pathname + '/ws';
+					var socket = new WebSocket(address);
+					socket.onmessage = function (msg) {
+						if (msg.data == 'reload') window.location.reload();
+						else if (msg.data == 'refreshcss') refreshCSS();
+					};
+					if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+						console.log('Live reload enabled.');
+						sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+					}
+				})();
+			}
+			else {
+				console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+			}
+			// ]]>
+		</script>
+	</body>
 </html>
