@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notre programmation - Cinéma Aurora{% endblock %}
+
+{% block body %}
+  <div class="actions" style="justify-content:space-between">
+    <h1 style="margin:0">Programmation</h1>
+  </div>
+  <p class="muted">Tous les films actuellement à l’affiche et leurs séances.</p>
+
+  <div class="movies">
+    {% for film in films %}
+    <!-- Film 1 -->
+    <article class="movie">
+  <div class="poster">{{ film.image }}</div>
+      <div>
+  <h3>{{ film.titre }}</h3>
+  <p class="muted">{{ film.genre }} · {{ film.duree }} min · {{ film.langue }}</p>
+        <h4>Séances</h4>
+        <ul>
+          {% for seance in film.seances %}
+          <li>{{ seance.datetime|date('d/m H:i') }} <a class="btn small" href="reservation.html?film={{ film.titre|url_encode }}&seance={{ seance.datetime|date('d/m H:i')|url_encode }}">Réserver</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </article>
+    {% endfor %}
+      </div>
+{% endblock %}

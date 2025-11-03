@@ -7,9 +7,18 @@ use App\Entity\Film;
 use App\Entity\Salle;
 use App\Entity\Seance;
 use App\Entity\Reservation;
+use App\Entity\Utilisateur;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = \Faker\Factory::create('fr_FR');
@@ -48,12 +57,27 @@ class AppFixtures extends Fixture
             $seances[] = $seance;
         }
 
+
+        // Création de 10 utilisateurs
+        $utilisateurs = [];
+        for ($i = 0; $i < 10; $i++) {
+            $user = new Utilisateur();
+            $user->setEmail($faker->unique()->safeEmail())
+                ->setRoles(['ROLE_USER']);
+            $hashed = $this->hasher->hashPassword($user, 'password');
+            $user->setPassword($hashed);
+            $manager->persist($user);
+            $utilisateurs[] = $user;
+        }
+
+        // Création de 100 réservations, chaque utilisateur en reçoit quelques-unes
         for ($i = 0; $i < 100; $i++) {
             $reservation = new Reservation();
             $reservation
                 ->setNombrePlaces($faker->numberBetween(1, 10))
                 ->setStatut(Reservation::STATUT_CONFIRME)
-                ->setSeance($seances[array_rand($seances)]);
+                ->setSeance($seances[array_rand($seances)])
+                ->setUtilisateur($utilisateurs[array_rand($utilisateurs)]);
             $manager->persist($reservation);
         }
 

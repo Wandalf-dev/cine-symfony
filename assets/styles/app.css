@@ -1,3 +1,96 @@
+/* ========== Largeur forcée pour register/login ========== */
+.register-card {
+  max-width: 500px;
+  width: 100%;
+  min-width: 320px;
+}
+.register-card form {
+  width: 100%;
+}
+.register-card form input[type="email"],
+.register-card form input[type="password"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.register-card form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.register-card form label {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.register-card form input[type="email"],
+.register-card form input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in oklab, var(--panel-2) 70%, transparent);
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+.register-card form input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+.register-card .form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.register-card .form-check label {
+  font-weight: 500;
+  margin-bottom: 0;
+}
+/* ========== Register Card ========== */
+.register-card {
+  max-width: 500px;
+  margin: 48px auto 0 auto;
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.register-card h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+.register-card form > div {
+  margin-bottom: 12px;
+}
+.register-card label {
+  font-weight: 600;
+}
+.register-card .btn.primary {
+  font-size: 1.1rem;
+  padding: 12px 0;
+}
 /* ========== Base / Reset ========== */
 *,
 *::before,
@@ -138,13 +231,19 @@ label{font-weight:600; font-size:14px}
 @media (max-width: 1100px){ .movies{grid-template-columns: repeat(2, 1fr)} }
 @media (max-width: 720px){ .movies{grid-template-columns: 1fr} }
 .movie{
-  display:grid; grid-template-columns: 110px 1fr; gap:16px; align-items:start; background: var(--panel);
-  border:1px solid color-mix(in oklab, var(--panel-2) 70%, transparent); padding:16px; border-radius:16px
+  display:grid; grid-template-columns: 110px 1fr; gap:16px; align-items:start;
+  background: var(--panel); border:1px solid color-mix(in oklab, var(--panel-2) 70%, transparent);
+  padding:16px; border-radius:16px; box-shadow: var(--shadow);
 }
 .movie .poster{
-  width:110px; height:160px; border-radius:12px; background:linear-gradient(135deg, var(--panel-2), color-mix(in oklab, var(--panel-2) 50%, transparent));
-  display:grid; place-items:center; font-weight:800; color:var(--muted)
+  width:110px; height:160px; border-radius:12px;
+  background:linear-gradient(135deg, var(--panel-2), color-mix(in oklab, var(--panel-2) 50%, transparent));
+  display:grid; place-items:center; font-weight:800; color:var(--muted);
 }
+.movie h3{margin:0 0 4px 0; font-size:18px}
+.movie h4{margin:12px 0 6px 0; font-size:14px; font-weight:600}
+.movie ul{list-style:none; padding:0; margin:0}
+.movie li{margin:6px 0; display:flex; align-items:center; justify-content:space-between; gap:8px}
 .tags{display:flex; gap:8px; flex-wrap:wrap}
 .tag{font-size:12px; padding:4px 8px; border-radius:999px; background: color-mix(in oklab, var(--panel-2) 70%, transparent); color:var(--muted)}
 .showtimes{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
