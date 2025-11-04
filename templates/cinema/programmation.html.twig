@@ -12,14 +12,32 @@
     {% for film in films %}
     <!-- Film 1 -->
     <article class="movie">
-  <div class="poster">{{ film.image }}</div>
+  <div class="poster">
+    {% if film.image %}
+      <img src="{{ asset('uploads/' ~ film.image) }}" alt="{{ film.titre }}" />
+    {% endif %}
+  </div>
       <div>
   <h3>{{ film.titre }}</h3>
   <p class="muted">{{ film.genre }} · {{ film.duree }} min · {{ film.langue }}</p>
         <h4>Séances</h4>
         <ul>
           {% for seance in film.seances %}
-          <li>{{ seance.datetime|date('d/m H:i') }} <a class="btn small" href="reservation.html?film={{ film.titre|url_encode }}&seance={{ seance.datetime|date('d/m H:i')|url_encode }}">Réserver</a></li>
+          <li class="seance-item">
+            <span class="seance-time">{{ seance.datetime|date('d/m H:i') }}</span>
+            {% if app.user %}
+              <form method="post" action="{{ path('app_reservation_create', {'id': seance.id}) }}" class="seance-form" autocomplete="off">
+                <div class="place-selector">
+                  <label for="places_{{ seance.id }}">Places :</label>
+                  <input type="number" id="places_{{ seance.id }}" name="nombre_places" min="1" max="10" value="1" required>
+                </div>
+                <input type="hidden" name="_token" value="{{ csrf_token('reserver' ~ seance.id) }}">
+                <button type="submit" class="btn small primary">Réserver</button>
+              </form>
+            {% else %}
+              <a class="btn small" href="{{ path('app_login') }}">Se connecter pour réserver</a>
+            {% endif %}
+          </li>
           {% endfor %}
         </ul>
       </div>

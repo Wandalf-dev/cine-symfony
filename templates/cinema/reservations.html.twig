@@ -11,11 +11,11 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Film</th>
-            <th>Date</th>
-            <th>Places</th>
-            <th>Salle</th>
-            <th>Statut</th>
+            <th class="sortable" data-sort="film"><span>Film</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="date"><span>Date</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="places"><span>Places</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="salle"><span>Salle</span> <span class="sort-arrow"></span></th>
+            <th class="sortable" data-sort="statut"><span>Statut</span> <span class="sort-arrow"></span></th>
             <th>Action</th>
           </tr>
         </thead>
@@ -24,7 +24,11 @@
             <tr>
               <td>{{ reservation.seance.film.titre }}</td>
               <td>{{ reservation.seance.datetime|date('d/m/Y H:i') }}</td>
-              <td>{{ reservation.getNombrePlaces() }}</td>
+              <td>
+                <span class="place-bubble" data-tooltip="Nombre de places réservées">
+                  {{ reservation.getNombrePlaces() }}
+                </span>
+              </td>
               <td>{{ reservation.seance.salle.numero }}</td>
               <td>
                 {% if reservation.getStatut() and reservation.getStatut().value == 'Confirmé' %}

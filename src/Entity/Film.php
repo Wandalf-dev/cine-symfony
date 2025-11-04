@@ -41,6 +41,11 @@ class Film
         $this->seances = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->titre ?? '';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

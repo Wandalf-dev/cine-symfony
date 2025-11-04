@@ -25,10 +25,10 @@
 				<input id="menu" type="checkbox" class="hidden" aria-hidden="true">
 				<label for="menu" class="menu-toggle btn">Menu</label>
 
-				   <nav class="nav-links">
-					   <a href="{{ path('app_home') }}" class="active">Accueil</a>
-					   <a href="{{ path('app_programmation') }}">Programmation</a>
-					   <a href="reservation.html">Réserver</a>
+					<nav class="nav-links">
+						<a href="{{ path('app_home') }}" class="active">Accueil</a>
+						<a href="{{ path('app_programmation') }}">Programmation</a>
+						<a href="{{ path('app_reservation') }}">Réserver</a>
 					   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 						   <a class="cta" href="{{ path('app_logout') }}">Déconnexion</a>
 						   <a href="{{ path('app_profil') }}">Profil</a>

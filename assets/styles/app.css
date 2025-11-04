@@ -1,3 +1,34 @@
+/* Flèches de tri sur les colonnes du tableau profil */
+.sortable { position: relative; user-select: none; }
+.sort-arrow {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-left: 4px;
+  font-size: 16px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1;
+}
+/* Input nombre de places sur la page réservation */
+#places {
+  width: 70px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1.5px solid color-mix(in oklab, var(--primary) 30%, var(--panel-2));
+  background: var(--panel-2);
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+#places:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary) 20%, transparent);
+  outline: none;
+}
 /* Bouton danger : texte blanc */
 .btn.danger, .btn.small.danger {
   background: var(--danger);
@@ -230,25 +261,125 @@ label{font-weight:600; font-size:14px}
 .table thead th{background: var(--panel-2); font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
 .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,"Liberation Mono","Courier New",monospace;
   background: var(--panel-2); border:1px solid color-mix(in oklab, var(--panel-2) 70%, transparent); padding:2px 6px; border-radius:6px; font-size:12px}
+/* ========== Bulles de places ========== */
+
+
+.place-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--panel-2);
+  border: 1px solid var(--primary);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0 4px;
+}
+.place-bubble input[type="number"] {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
 
 /* ========== Movie list (Programmation) ========== */
-.movies{display:grid; gap:20px; grid-template-columns: repeat(3, 1fr)}
+.movies{display:grid; gap:24px; grid-template-columns: repeat(2, 1fr)}
 @media (max-width: 1100px){ .movies{grid-template-columns: repeat(2, 1fr)} }
 @media (max-width: 720px){ .movies{grid-template-columns: 1fr} }
 .movie{
-  display:grid; grid-template-columns: 110px 1fr; gap:16px; align-items:start;
+  display:grid; grid-template-columns: 140px 1fr; gap:20px; align-items:start;
   background: var(--panel); border:1px solid color-mix(in oklab, var(--panel-2) 70%, transparent);
-  padding:16px; border-radius:16px; box-shadow: var(--shadow);
+  padding:20px; border-radius:16px; box-shadow: var(--shadow);
 }
 .movie .poster{
-  width:110px; height:160px; border-radius:12px;
+  width:140px; height:200px; border-radius:12px;
   background:linear-gradient(135deg, var(--panel-2), color-mix(in oklab, var(--panel-2) 50%, transparent));
   display:grid; place-items:center; font-weight:800; color:var(--muted);
 }
-.movie h3{margin:0 0 4px 0; font-size:18px}
-.movie h4{margin:12px 0 6px 0; font-size:14px; font-weight:600}
+.movie h3{margin:0 0 4px 0; font-size:20px}
+.movie h4{margin:12px 0 8px 0; font-size:15px; font-weight:600}
 .movie ul{list-style:none; padding:0; margin:0}
-.movie li{margin:6px 0; display:flex; align-items:center; justify-content:space-between; gap:8px}
+.movie li{margin:0; display:block}
+
+/* Séances avec sélecteur de places amélioré */
+.seance-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background: color-mix(in oklab, var(--panel-2) 40%, transparent);
+  border-radius: 10px;
+  border: 1px solid color-mix(in oklab, var(--panel-2) 60%, transparent);
+  transition: background 0.2s;
+}
+.seance-item:hover {
+  background: color-mix(in oklab, var(--panel-2) 60%, transparent);
+}
+.seance-time {
+  font-weight: 600;
+  min-width: 110px;
+  color: var(--text);
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+.seance-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+.place-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--panel);
+  border: 1px solid color-mix(in oklab, var(--panel-2) 70%, transparent);
+}
+.place-selector label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0;
+  white-space: nowrap;
+}
+.place-selector input[type="number"] {
+  width: 50px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in oklab, var(--panel-2) 70%, transparent);
+  background: var(--panel-2);
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+.place-selector input[type="number"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary) 20%, transparent);
+}
+
+.btn.small {
+    padding: 8px 18px;
+    font-size: 14px;
+}
+
 .tags{display:flex; gap:8px; flex-wrap:wrap}
 .tag{font-size:12px; padding:4px 8px; border-radius:999px; background: color-mix(in oklab, var(--panel-2) 70%, transparent); color:var(--muted)}
 .showtimes{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}

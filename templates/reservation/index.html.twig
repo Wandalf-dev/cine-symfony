@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver une séance{% endblock %}
+
+{% block body %}
+<div class="container" style="max-width:600px;margin:auto;">
+  <h1>Réserver une séance</h1>
+  {% if success %}
+    <div class="badge success" style="margin-bottom:18px;">Réservation enregistrée !</div>
+  {% endif %}
+  <form method="post" class="form" style="margin-top:24px;">
+    <label for="film">Film</label>
+    <select name="film" id="film" required>
+      <option value="">Choisir un film</option>
+      {% for film in films %}
+        <option value="{{ film.id }}">{{ film.titre }}</option>
+      {% endfor %}
+    </select>
+    <label for="seance">Séance</label>
+    <select name="seance" id="seance" required>
+      <option value="">Choisir une séance</option>
+      {% for seance in seances %}
+        <option value="{{ seance.id }}" data-film="{{ seance.film.id }}">{{ seance.film.titre }} - {{ seance.datetime|date('d/m H:i') }}</option>
+      {% endfor %}
+    </select>
+    <label for="places">Nombre de places</label>
+    <input type="number" name="nombre_places" id="places" min="1" max="10" value="1" required>
+    <button type="submit" class="btn primary" style="margin-top:18px;">Réserver</button>
+  </form>
+</div>
+{% endblock %}
