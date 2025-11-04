@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block body %}
+<h1>Mon profil</h1>
+    <p class="muted">Bienvenue sur votre espace personnel.</p>
+
+    <h2>Mes réservations</h2>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Film</th>
+            <th>Date</th>
+            <th>Places</th>
+            <th>Salle</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reservation in reservations %}
+            <tr>
+              <td>{{ reservation.seance.film.titre }}</td>
+              <td>{{ reservation.seance.datetime|date('d/m/Y H:i') }}</td>
+              <td>{{ reservation.getNombrePlaces() }}</td>
+              <td>{{ reservation.seance.salle.numero }}</td>
+              <td>
+                {% if reservation.getStatut() and reservation.getStatut().value == 'Confirmé' %}
+                  <span class="badge success">Confirmée</span>
+                {% else %}
+                  <span class="badge danger">Annulée</span>
+                {% endif %}
+              </td>
+              <td>
+                  {% if reservation.getStatut() and reservation.getStatut().value == 'Confirmé' %}
+                    <form method="post" action="{{ path('app_reservation_annuler', {'id': reservation.id}) }}" style="display:inline;">
+                      <input type="hidden" name="_token" value="{{ csrf_token('annuler' ~ reservation.id) }}">
+                      <button type="submit" class="btn small danger">Annuler</button>
+                    </form>
+                  {% else %}
+                    -
+                  {% endif %}
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="6">Aucune réservation trouvée.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Entity\Film;
 use App\Entity\Salle;
 use App\Entity\Seance;
 use App\Entity\Reservation;
+use App\Enum\StatutReservation;
 use App\Entity\Utilisateur;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -75,7 +76,7 @@ class AppFixtures extends Fixture
             $reservation = new Reservation();
             $reservation
                 ->setNombrePlaces($faker->numberBetween(1, 10))
-                ->setStatut(Reservation::STATUT_CONFIRME)
+                ->setStatut(StatutReservation::CONFIRME)
                 ->setSeance($seances[array_rand($seances)])
                 ->setUtilisateur($utilisateurs[array_rand($utilisateurs)]);
             $manager->persist($reservation);

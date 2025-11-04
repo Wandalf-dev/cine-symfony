@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+
+use App\Enum\StatutReservation;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
@@ -24,8 +26,8 @@ class Reservation
     #[ORM\Column]
     private ?int $nombre_places = null;
 
-    #[ORM\Column(length: 20)]
-    private ?string $statut = null;
+    #[ORM\Column(enumType: StatutReservation::class)]
+    private ?StatutReservation $statut = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Utilisateur $utilisateur = null;
@@ -59,15 +61,14 @@ class Reservation
         return $this;
     }
 
-    public function getStatut(): ?string
+    public function getStatut(): ?StatutReservation
     {
         return $this->statut;
     }
 
-    public function setStatut(string $statut): static
+    public function setStatut(?StatutReservation $statut): static
     {
         $this->statut = $statut;
-
         return $this;
     }
 

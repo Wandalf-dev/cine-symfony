@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "make migration enum statut",
+			"type": "shell",
+			"command": "php bin/console make:migration",
+			"args": [],
+			"problemMatcher": []
+		},
+		{
+			"label": "migrate enum statut",
+			"type": "shell",
+			"command": "php bin/console doctrine:migrations:migrate --no-interaction",
+			"args": [],
+			"problemMatcher": []
+		}
+	]
+}
