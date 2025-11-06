@@ -31,7 +31,7 @@
 					<a href="{{ path('app_reservation') }}">Réserver</a>
 				   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 					   {% if is_granted('ROLE_ADMIN') %}
-						   <a href="{{ path('admin') }}" style="background: #8b5cf6; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Administration</a>
+						   <a href="{{ path('admin') }}">Administration</a>
 					   {% endif %}
 					   <a href="{{ path('app_profil') }}">Profil</a>
 					   <a class="cta" href="{{ path('app_logout') }}">Déconnexion</a>
