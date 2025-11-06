@@ -1,12 +1,15 @@
 <?php
 
+
 namespace App\Controller\Admin;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use App\Entity\Seance;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
+#[IsGranted('ROLE_ADMIN')]
 class SeanceCrudController extends AbstractCrudController
 {
     public function configureFields(string $pageName): iterable

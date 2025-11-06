@@ -26,14 +26,19 @@
           <li class="seance-item">
             <span class="seance-time">{{ seance.datetime|date('d/m H:i') }}</span>
             {% if app.user %}
-              <form method="post" action="{{ path('app_reservation_create', {'id': seance.id}) }}" class="seance-form" autocomplete="off">
-                <div class="place-selector">
-                  <label for="places_{{ seance.id }}">Places :</label>
-                  <input type="number" id="places_{{ seance.id }}" name="nombre_places" min="1" max="10" value="1" required>
-                </div>
-                <input type="hidden" name="_token" value="{{ csrf_token('reserver' ~ seance.id) }}">
-                <button type="submit" class="btn small primary">Réserver</button>
-              </form>
+              {% if not seancesCompletes[seance.id] %}
+                <form method="get" action="{{ path('app_reservation') }}" class="seance-form" autocomplete="off">
+                  <div class="place-selector">
+                    <label for="places_{{ seance.id }}">Places :</label>
+                    <input type="number" id="places_{{ seance.id }}" name="nombre_places" min="1" max="10" value="1" required>
+                  </div>
+                  <input type="hidden" name="film" value="{{ film.id }}">
+                  <input type="hidden" name="seance" value="{{ seance.id }}">
+                  <button type="submit" class="btn small primary">Réserver</button>
+                </form>
+              {% else %}
+                <span class="btn small disabled" style="background:#ccc;cursor:not-allowed;">Séance complète</span>
+              {% endif %}
             {% else %}
               <a class="btn small" href="{{ path('app_login') }}">Se connecter pour réserver</a>
             {% endif %}
@@ -44,4 +49,9 @@
     </article>
     {% endfor %}
       </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script src="{{ asset('recap.js') }}"></script>
 {% endblock %}

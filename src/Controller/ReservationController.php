@@ -22,6 +22,12 @@ class ReservationController extends AbstractController
         $films = $filmRepo->findAll();
         $seances = $seanceRepo->findAll();
         $success = false;
+
+        // Pré-remplissage depuis GET
+        $filmId = $request->query->get('film');
+        $seanceId = $request->query->get('seance');
+        $places = $request->query->get('nombre_places', 1);
+
         if ($request->isMethod('POST')) {
             $filmId = $request->request->get('film');
             $seanceId = $request->request->get('seance');
@@ -39,10 +45,13 @@ class ReservationController extends AbstractController
                 return $this->redirectToRoute('app_profil');
             }
         }
-        return $this->render('reservation/index.html.twig', [
+        return $this->render('reservation/form.html.twig', [
             'films' => $films,
             'seances' => $seances,
-            'success' => $success
+            'success' => $success,
+            'filmId' => $filmId,
+            'seanceId' => $seanceId,
+            'places' => $places
         ]);
     }
 }

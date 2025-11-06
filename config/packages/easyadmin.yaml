@@ -1,0 +1,10 @@
+easy_admin:
+    design:
+        locale: fr
+
+framework:
+    default_locale: fr
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks:
+            - fr

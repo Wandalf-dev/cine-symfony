@@ -6,6 +6,7 @@ use App\Entity\Film;
 use App\Repository\FilmRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\SeanceRepository;
+use App\Service\ReservationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,11 +37,19 @@ final class CinemaController extends AbstractController
         return $this->redirectToRoute('app_profil');
     }
     #[Route('/programmation', name: 'app_programmation')]
-    public function programmation(FilmRepository $filmRepository): Response
+    public function programmation(FilmRepository $filmRepository, ReservationService $reservationService): Response
     {
         $films = $filmRepository->findAll();
+        // Préparer un tableau des séances complètes
+        $seancesCompletes = [];
+        foreach ($films as $film) {
+            foreach ($film->getSeances() as $seance) {
+                $seancesCompletes[$seance->getId()] = $reservationService->isSeanceComplete($seance);
+            }
+        }
         return $this->render('cinema/programmation.html.twig', [
-            'films' => $films
+            'films' => $films,
+            'seancesCompletes' => $seancesCompletes
         ]);
     }
     #[Route('/profil', name: 'app_profil')]

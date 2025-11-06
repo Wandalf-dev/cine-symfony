@@ -25,18 +25,21 @@
 				<input id="menu" type="checkbox" class="hidden" aria-hidden="true">
 				<label for="menu" class="menu-toggle btn">Menu</label>
 
-					<nav class="nav-links">
-						<a href="{{ path('app_home') }}" class="active">Accueil</a>
-						<a href="{{ path('app_programmation') }}">Programmation</a>
-						<a href="{{ path('app_reservation') }}">Réserver</a>
-					   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-						   <a class="cta" href="{{ path('app_logout') }}">Déconnexion</a>
-						   <a href="{{ path('app_profil') }}">Profil</a>
-					   {% else %}
-						   <a class="cta" href="{{ path('app_login') }}">Se connecter</a>
-						   <a class="btn primary" style="margin-left:8px;" href="{{ path('app_register') }}">S'inscrire</a>
+				<nav class="nav-links">
+					<a href="{{ path('app_home') }}" class="active">Accueil</a>
+					<a href="{{ path('app_programmation') }}">Programmation</a>
+					<a href="{{ path('app_reservation') }}">Réserver</a>
+				   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					   {% if is_granted('ROLE_ADMIN') %}
+						   <a href="{{ path('admin') }}" style="background: #8b5cf6; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Administration</a>
 					   {% endif %}
-				   </nav>
+					   <a href="{{ path('app_profil') }}">Profil</a>
+					   <a class="cta" href="{{ path('app_logout') }}">Déconnexion</a>
+				   {% else %}
+					   <a class="cta" href="{{ path('app_login') }}">Se connecter</a>
+					   <a class="btn primary" style="margin-left:8px;" href="{{ path('app_register') }}">S'inscrire</a>
+				   {% endif %}
+			   </nav>
 			</div>
 		</header>
 

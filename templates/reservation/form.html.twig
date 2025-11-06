@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réserver une séance{% endblock %}
+
+{% block body %}
+<div class="container" style="max-width:600px;margin:auto;">
+  <h1 id="reservation-title">Réserver une séance</h1>
+  {% if success %}
+    <div class="badge success" style="margin-bottom:18px;">Réservation enregistrée !</div>
+  {% endif %}
+  <form method="post" class="form" style="margin-top:24px;" id="reservation-form">
+    <label for="film">Film</label>
+    <select name="film" id="film" required>
+      <option value="">Choisir un film</option>
+      {% for film in films %}
+        <option value="{{ film.id }}" {% if filmId is defined and filmId == film.id %}selected{% endif %}>{{ film.titre }}</option>
+      {% endfor %}
+    </select>
+    <label for="seance">Séance</label>
+    <select name="seance" id="seance" required>
+      <option value="">Choisir une séance</option>
+      {% for seance in seances %}
+        <option value="{{ seance.id }}" data-film="{{ seance.film.id }}" {% if seanceId is defined and seanceId == seance.id %}selected{% endif %}>{{ seance.film.titre }} - {{ seance.datetime|date('d/m H:i') }}</option>
+      {% endfor %}
+    </select>
+    <label for="places">Nombre de places</label>
+    <input type="number" name="nombre_places" id="places" min="1" max="10" value="{{ places is defined ? places : 1 }}" required>
+    <button type="submit" class="btn primary" style="margin-top:18px;" id="btn-reserver">Réserver</button>
+  </form>
+  <div id="reservation-status"></div>
+<style>
+  .loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .loader-box {
+    background: white;
+    border-radius: 16px;
+    padding: 48px 64px;
+    text-align: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  .loader-text {
+    color: #1f2937;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .loader-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e5e7eb;
+    border-top-color: #1f2937;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('reservation-form');
+    const btn = document.getElementById('btn-reserver');
+    const status = document.getElementById('reservation-status');
+    const title = document.getElementById('reservation-title');
+    
+    if (form && btn && status && title) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        form.style.display = 'none';
+        title.style.display = 'none';
+        status.innerHTML = `
+          <div class="loader-overlay">
+            <div class="loader-box">
+              <div class="loader-text">Réservation en cours...</div>
+              <div class="loader-spinner"></div>
+            </div>
+          </div>
+        `;
+        setTimeout(function() {
+          form.submit();
+        }, 1000);
+      });
+    }
+  });
+</script>
+</div>
+{% endblock %}
